@@ -83,7 +83,7 @@ export default {
   async checkout () {
     this.store.dispatch('setLoading', true)
     document.body.dispatchEvent(new Event('designerBeforeGetCheckoutInfos'))
-
+    await this.config.cart.init()
     const data = await this._getCheckoutData()
     const sizes = data.sizes || [{oxid: data.aid, amount: this.store.getters.amount, size: this.store.getters.selectedSize ? this.store.getters.selectedSize.id: undefined}]
     for (const selection of sizes) {

@@ -43,7 +43,9 @@ export default {
         url: '',
         data: {},
         link: '',
-        callback: () => {}
+        init: () => {},
+        addItem: () => {},
+        submit: () => {},
       }
     },
     locale: {
