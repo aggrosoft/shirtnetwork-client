@@ -1,4 +1,3 @@
-import axios from 'axios';
 import backend from './backend.js';
 export default {
 
@@ -54,12 +53,17 @@ export default {
     const data = this._getShopRequestData()
 
     const settings = this.config.infos
-    this.shopCancelToken && this.shopCancelToken.cancel()
-    this.shopCancelToken = axios.CancelToken.source();
+
+    this.shopCancelToken && this.shopCancelToken.abort()
+    this.shopCancelToken = new AbortController();
 
     try {
-      const response = await axios.post(settings.url, this._buildFormData(new FormData(), Object.assign(data, settings.data)), { headers: { "Content-Type": "multipart/form-data" }, cancelToken: this.shopCancelToken.token })
-      this.store.dispatch('setLocalVar', {localVar: 'shopProductInfos', value: response.data});
+      const response = await fetch(settings.url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        body: this._buildFormData(new FormData(), Object.assign(data, settings.data)),
+        signal: this.shopCancelToken.signal
+      });
+      this.store.dispatch('setLocalVar', {localVar: 'shopProductInfos', value: await response.json()});
     } catch(e) {}
 
   },
@@ -69,12 +73,16 @@ export default {
       const data = this._getShopRequestData()
 
       const settings = this.config.stock
-      this.stockCancelToken && this.stockCancelToken.cancel()
-      this.stockCancelToken = axios.CancelToken.source();
+      this.stockCancelToken && this.stockCancelToken.abort()
+      this.stockCancelToken = new AbortController();
 
       try {
-        const response = await axios.post(settings.url, this._buildFormData(new FormData(), Object.assign(data, settings.data)), { headers: { "Content-Type": "multipart/form-data" }, cancelToken: this.stockCancelToken.token })
-        this.store.dispatch('setStocks', response.data);
+        const response = await fetch(settings.url, {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          body: this._buildFormData(new FormData(), Object.assign(data, settings.data)),
+          signal: this.stockCancelToken.signal
+        });
+        this.store.dispatch('setStocks', await response.json());
       } catch(e) {}
 
     }
@@ -90,7 +98,7 @@ export default {
       const confids = await backend.saveConfig({size: selection.size})
       const config = confids.pop()
       await this.config.cart.addItem(config, data, selection)
-      document.body.dispatchEvent(new Event('designerAfterCartAdd', {detail: {config, data, selection}}))
+      document.body.dispatchEvent(new CustomEvent('designerAfterCartAdd', {detail: {config, data, selection}}))
     }
 
     document.body.dispatchEvent(new Event('designerBeforeCheckout'))
@@ -103,8 +111,19 @@ export default {
   async _getCheckoutData () {
     const settings = this.config.cart
     const data = this._getShopRequestData()
-    const response = await axios.post(settings.url, this._buildFormData(new FormData(), Object.assign(data, settings.data)), { headers: { "Content-Type": "multipart/form-data" } })
-    return response.data
+
+    const response = await fetch(settings.url + '/config', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: this._buildFormData(new FormData(), Object.assign(data, settings.data)) // body data type must match "Content-Type" header
+    });
+
+    return await response.json()
   },
 
   _buildFormData(formData, data, parentKey) {

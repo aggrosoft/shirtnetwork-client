@@ -1,4 +1,3 @@
-import axios from 'axios'
 import defaults from './config.defaults.js'
 import loadScript from './util/loadscript.js'
 import merge from './util/merge.js';
@@ -52,9 +51,9 @@ export default {
   async _initDesigner () {
     this.instance = window.designer = new ShirtnetworkDesigner();
     this.config.applyConfig(this.instance)
-    document.body.dispatchEvent(new Event('designerInitialized', {detail: this.instance}))
+    document.body.dispatchEvent(new CustomEvent('designerInitialized', {detail: this.instance}))
     this.instance.$mount(document.getElementById(this.config.settings.container));
-    document.body.dispatchEvent(new Event('designerMounted', {detail: this.instance}))
+    document.body.dispatchEvent(new CustomEvent('designerMounted', {detail: this.instance}))
   },
 
   async _bootDesigner () {
@@ -62,8 +61,8 @@ export default {
 
     try {
       if (settings.initial.config) {
-        const response = await axios.get(settings.backend.config)
-        await this.instance.$store.dispatch('applyConfig', response.data)
+        const response = await fetch(settings.backend.config)
+        await this.instance.$store.dispatch('applyConfig', await response.json())
       } else {
         await this.instance.$store.dispatch('boot', settings.initial)
       }
@@ -91,7 +90,7 @@ export default {
         app.$store.dispatch('setSelectedPrinttype', printtype);
       }
     }
-    document.body.dispatchEvent(new Event('designerBooted', {detail: this.instance}))
+    document.body.dispatchEvent(new CustomEvent('designerBooted', {detail: this.instance}))
   },
 
   async _attachEventListeners () {
