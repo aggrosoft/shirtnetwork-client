@@ -25,6 +25,6 @@ export default {
       body: JSON.stringify(file) // body data type must match "Content-Type" header
     });
 
-    return response.json()
+    return await response.json()
   }
 }
