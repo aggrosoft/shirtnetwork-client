@@ -15,12 +15,9 @@ export default {
     merge(file, data)
 
     const response = await fetch(this.endpoint + '/config', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, *same-origin, omit
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'text/plain'
       },
       body: JSON.stringify(file) // body data type must match "Content-Type" header
     });

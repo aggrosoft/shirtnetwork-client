@@ -61,7 +61,7 @@ export default {
 
     try {
       if (settings.initial.config) {
-        const response = await fetch(settings.backend.config)
+        const response = await fetch(settings.backend.config + '/config/' + settings.initial.config)
         await this.instance.$store.dispatch('applyConfig', await response.json())
       } else {
         await this.instance.$store.dispatch('boot', settings.initial)

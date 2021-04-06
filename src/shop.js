@@ -112,14 +112,8 @@ export default {
     const settings = this.config.cart
     const data = this._getShopRequestData()
 
-    const response = await fetch(settings.url + '/config', {
+    const response = await fetch(settings.url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, *same-origin, omit
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
       body: this._buildFormData(new FormData(), Object.assign(data, settings.data)) // body data type must match "Content-Type" header
     });
 
