@@ -88,6 +88,7 @@ export default {
 
     if (this.settings.debug) {
       Vue.config.devtools = true
+      store.dispatch('setShowDevTools', true);
       localStorage.setItem('debug', 'shirtnetwork:*')
     } else {
       localStorage.removeItem('debug')
