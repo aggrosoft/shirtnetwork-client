@@ -39,6 +39,9 @@ export default {
         url: '',
         data: {}
       },
+      links: {
+        delivery: ''
+      },
       cart: {
         url: '',
         data: {},

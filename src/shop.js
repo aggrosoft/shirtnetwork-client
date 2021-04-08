@@ -19,6 +19,14 @@ export default {
     this.store.watch(function(state, getters){ return getters.selectedPrinttype; }, () => this.reloadShopInfos() );
     this.store.watch(function(state, getters){ return getters.amount; }, () => this.reloadShopInfos() );
     this.store.dispatch('observe', {event: 'checkout', callback: () => this.checkout() });
+    this.store.dispatch('observe', {event: 'navigate', callback: (to) => {
+      if (this.config.links[to]) {
+        Object.assign(document.createElement('a'), {
+          target: '_blank',
+          href: this.config.links[to],
+        }).click();
+      }
+    }});
     this.store.dispatch('observe', {event: 'tocart', callback: () => {
         top.location.href = this.config.cart.link;
     }});
