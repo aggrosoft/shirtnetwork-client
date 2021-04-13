@@ -23,7 +23,7 @@ export default {
       headers: {
         'Content-Type': contentType
       },
-      body: this.type === 'node' ? file : JSON.stringify(file) // body data type must match "Content-Type" header
+      body: JSON.stringify(file) // body data type must match "Content-Type" header
     });
 
     return await response.json()
