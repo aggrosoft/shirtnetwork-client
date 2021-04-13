@@ -25,7 +25,7 @@ export default {
     await this._initDesigner()
 
     // Initialize backend
-    backend.init(this.instance.$store, this.config.settings.backend.config)
+    backend.init(this.instance.$store, this.config.settings.backend.config, this.config.settings.backend.type)
 
     // Attach event listeners
     await this._attachEventListeners()

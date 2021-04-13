@@ -28,7 +28,8 @@ export default {
       upload: '',
       config: '',
       fonts: '',
-      cacheKey: ''
+      cacheKey: '',
+      type: ''
     },
     shop: {
       infos: {
