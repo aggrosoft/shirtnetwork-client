@@ -87,7 +87,7 @@ export default {
         pt.name == this.config.settings.initial.printtype || pt.id == this.config.settings.initial.printtype
       )
       if (printtype) {
-        app.$store.dispatch('setSelectedPrinttype', printtype);
+        this.instance.$store.dispatch('setSelectedPrinttype', printtype);
       }
     }
     document.body.dispatchEvent(new CustomEvent('designerBooted', {detail: this.instance}))
