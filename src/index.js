@@ -15,6 +15,8 @@ export default {
     // Apply config to defaults
     merge(this.config, config)
 
+    document.body.dispatchEvent(new CustomEvent('designerConfigInitialized', {detail: this.config}))
+
     // Load needed scripts for designer
     await this._loadRequirements()
 
