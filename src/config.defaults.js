@@ -34,11 +34,13 @@ export default {
     shop: {
       infos: {
         url: '',
-        data: {}
+        data: {},
+        handler: undefined
       },
       stock: {
         url: '',
-        data: {}
+        data: {},
+        handler: undefined
       },
       links: {
         delivery: ''

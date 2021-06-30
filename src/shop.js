@@ -62,6 +62,11 @@ export default {
 
     const settings = this.config.infos
 
+    if (settings.handler) {
+      this.store.dispatch('setLocalVar', {localVar: 'shopProductInfos', value: await settings.handler(data)});
+      return
+    }
+
     this.shopCancelToken && this.shopCancelToken.abort()
     this.shopCancelToken = new AbortController();
 
@@ -81,6 +86,12 @@ export default {
       const data = this._getShopRequestData()
 
       const settings = this.config.stock
+
+      if (settings.handler) {
+        this.store.dispatch('setStocks', await settings.handler(data));
+        return
+      }
+
       this.stockCancelToken && this.stockCancelToken.abort()
       this.stockCancelToken = new AbortController();
 

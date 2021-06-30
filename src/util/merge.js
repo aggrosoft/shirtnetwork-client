@@ -1,8 +1,19 @@
-export default function mergeDefaults(config, defaults) {
-  if (config === null || config === undefined) return defaults;
-  for (var attrname in defaults) {
-    if (defaults[attrname].constructor === Object) config[attrname] = mergeDefaults(config[attrname], defaults[attrname]);
-    else if (config[attrname] === undefined) config[attrname] = defaults[attrname];
-  }
-  return config;
+const merge = (obj1, obj2) => {
+
+    const recursiveMerge = (obj, entries) => {
+      for (const [key, value] of entries) {
+        if (typeof value === "object") {
+          obj[key] = obj[key] ? {...obj[key]} : {};
+          recursiveMerge(obj[key], Object.entries(value))
+        } else {
+            obj[key] = value;
+          }
+        }
+
+        return obj;
+      }
+
+    return recursiveMerge(obj1, Object.entries(obj2))
 }
+
+export default merge
