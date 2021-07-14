@@ -131,6 +131,10 @@ export default {
     const settings = this.config.cart
     const data = this._getShopRequestData()
 
+    if (settings.handler) {
+      return await settings.handler(data)
+    }
+
     const response = await fetch(settings.url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       body: this._buildFormData(new FormData(), Object.assign(data, settings.data)) // body data type must match "Content-Type" header

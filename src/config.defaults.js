@@ -52,6 +52,7 @@ export default {
         init: () => {},
         addItem: () => {},
         submit: () => {},
+        handler: undefined
       }
     },
     locale: {
