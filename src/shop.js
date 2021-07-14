@@ -1,9 +1,12 @@
 import backend from './backend.js';
+import deepEqual from './util/deepEqual.js';
 export default {
 
   store: undefined,
   config: undefined,
   useStock: false,
+  lastShopRequestData: {},
+  lastStockRequestData: {},
 
   init (store, config, useStock) {
     this.store = store
@@ -59,7 +62,10 @@ export default {
 
   async reloadShopInfos () {
     const data = this._getShopRequestData()
-
+    if (deepEqual(data, this.lastShopRequestData)){
+      return
+    }
+    this.lastShopRequestData = data
     const settings = this.config.infos
 
     if (settings.handler) {
@@ -84,6 +90,10 @@ export default {
   async reloadStockInfos () {
     if (this.useStock) {
       const data = this._getShopRequestData()
+      if (deepEqual(data, this.lastStockRequestData)){
+        return
+      }
+      this.lastStockRequestData = data
 
       const settings = this.config.stock
 
