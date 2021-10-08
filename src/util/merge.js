@@ -2,7 +2,7 @@ const merge = (obj1, obj2) => {
 
     const recursiveMerge = (obj, entries) => {
       for (const [key, value] of entries) {
-        if (typeof value === "object") {
+        if (!Array.isArray(value) && typeof value === "object") {
           obj[key] = obj[key] ? {...obj[key]} : {};
           recursiveMerge(obj[key], Object.entries(value))
         } else {
