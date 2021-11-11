@@ -52,7 +52,8 @@ export default {
         init: () => {},
         addItem: () => {},
         submit: () => {},
-        handler: undefined
+        handler: undefined,
+        showAfterSalesModal: true
       }
     },
     locale: {

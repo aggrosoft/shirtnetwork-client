@@ -134,7 +134,7 @@ export default {
     await this.config.cart.submit()
 
     this.store.dispatch('setLoading', false);
-    this.store.dispatch('setShowAfterSalesModal', true);
+    this.store.dispatch('setShowAfterSalesModal', this.config.cart.showAfterSalesModal);
   },
 
   async _getCheckoutData () {
