@@ -33,6 +33,15 @@ export default {
     this.store.dispatch('observe', {event: 'tocart', callback: () => {
         top.location.href = this.config.cart.link;
     }});
+
+    this.store.dispatch('observe', {event: 'updateShareLink', callback: async () => {
+        const confids = await backend.saveConfig({})
+        const confid = confids.pop();
+        const shareBase = new URL(top.location.href);
+        shareBase.searchParams.set('config', confid);
+        this.store.dispatch('setShareLink', shareBase.toString());
+    }});
+
   },
 
   _getShopRequestData () {
