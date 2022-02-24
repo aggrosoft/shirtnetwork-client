@@ -42,7 +42,8 @@ export default {
 
   async _loadRequirements () {
     for (const url of this.config.requirements) {
-      await loadScript(url)
+      if (url)
+        await loadScript(url)
     }
   },
 

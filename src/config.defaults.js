@@ -4,7 +4,7 @@ export default {
   version: '2.0.0',
 
   requirements: [
-    'https://polyfill.io/v3/polyfill.js?features=es5,es6',
+    BROWSERSLIST_ENV !== 'modern' ? 'https://polyfill.io/v3/polyfill.js?features=es5,es6' : '',
     `${CDN_URL}vue/2.6.9/vue.min.js`
   ],
 
@@ -62,6 +62,7 @@ export default {
     },
     interface: {
       printtypeMode: 'object',
+      amountMode: 'single',
       stock: false,
       constraints: true,
       loadCSS: true
@@ -89,6 +90,7 @@ export default {
     store.dispatch('setLogosPerPage', settings.paging.logos);
     store.dispatch('setUseStock', settings.interface.stock);
     store.dispatch('setUseConstraints', settings.interface.constraints);
+    store.dispatch('setAmountMode', settings.interface.amountMode);
 
     for(const key in settings.localVars) {
       store.dispatch('setLocalVar', {localVar: key, value: settings.localVars[key]})

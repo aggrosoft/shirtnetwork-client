@@ -6,7 +6,9 @@
   "module": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:prod": "webpack --mode=production",
+    "build:prod": "npm run build:es5 && npm run build:es6",
+    "build:es5": "BROWSERSLIST_ENV=production webpack --mode=production",
+    "build:es6": "BROWSERSLIST_ENV=modern webpack --mode=production",
     "build:dev": "webpack --mode=development",
     "start": "webpack serve --open --mode=development  --host 0.0.0.0"
   },
@@ -28,7 +30,8 @@
     "core-js": "^3.9.1",
     "webpack": "^5.26.3",
     "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "babel": {
     "presets": [
@@ -44,10 +47,18 @@
   "dependencies": {
     "axios": "^0.21.1"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 9",
-    "Safari >= 10"
-  ]
+  "browserslist": {
+    "production": [
+      "> 1%",
+      "ie 10",
+      "Safari >= 10"
+    ],
+    "modern": [
+      "Chrome >= 60",
+      "Safari >= 10.1",
+      "iOS >= 10.3",
+      "Firefox >= 54",
+      "Edge >= 15"
+    ]
+  }
 }
