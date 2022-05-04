@@ -65,6 +65,7 @@ export default {
       amountMode: 'single',
       stock: false,
       constraints: true,
+      showRealSizes: true,
       loadCSS: true
     },
     paging: {
@@ -91,6 +92,7 @@ export default {
     store.dispatch('setUseStock', settings.interface.stock);
     store.dispatch('setUseConstraints', settings.interface.constraints);
     store.dispatch('setAmountMode', settings.interface.amountMode);
+    store.dispatch('setShowRealSizes', settings.interface.showRealSizes);
 
     for(const key in settings.localVars) {
       store.dispatch('setLocalVar', {localVar: key, value: settings.localVars[key]})
