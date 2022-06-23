@@ -21,6 +21,8 @@ export default {
     this.store.watch(function(state, getters){ return getters.selectedSize; }, () => this.reloadShopInfos() && this.reloadStockInfos() );
     this.store.watch(function(state, getters){ return getters.selectedPrinttype; }, () => this.reloadShopInfos() );
     this.store.watch(function(state, getters){ return getters.amount; }, () => this.reloadShopInfos() );
+    this.store.watch(function(state, getters){ return getters.localVar('selections'); }, () => this.reloadShopInfos() );
+    this.store.watch(function(state, getters){ return getters.localVar('checkoutData'); }, () => this.reloadShopInfos() );
     this.store.dispatch('observe', {event: 'checkout', callback: () => this.checkout() });
     this.store.dispatch('observe', {event: 'navigate', callback: (to) => {
       if (this.config.links[to]) {
