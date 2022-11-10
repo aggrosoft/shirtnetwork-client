@@ -137,13 +137,14 @@ export default {
     for (const selection of sizes) {
       const confids = await backend.saveConfig({size: selection.size})
       const config = confids.pop()
+      document.body.dispatchEvent(new CustomEvent('designerBeforeCartAdd', {detail: {config, data, selection}}))
       await this.config.cart.addItem(config, data, selection)
       document.body.dispatchEvent(new CustomEvent('designerAfterCartAdd', {detail: {config, data, selection}}))
     }
 
     document.body.dispatchEvent(new Event('designerBeforeCheckout'))
     await this.config.cart.submit()
-
+    document.body.dispatchEvent(new Event('designerAfterCheckout'))
     this.store.dispatch('setLoading', false);
     this.store.dispatch('setShowAfterSalesModal', this.config.cart.showAfterSalesModal);
   },
