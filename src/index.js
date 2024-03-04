@@ -38,6 +38,8 @@ export default {
     // After boot routines
     await this._onAfterBoot()
 
+    return this.instance
+
   },
 
   async _loadRequirements () {

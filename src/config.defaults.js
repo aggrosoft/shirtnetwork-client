@@ -4,7 +4,6 @@ export default {
   version: '2.0.0',
 
   requirements: [
-    BROWSERSLIST_ENV !== 'modern' ? 'https://polyfill.io/v3/polyfill.js?features=es5,es6' : '',
     `${CDN_URL}vue/2.6.9/vue.min.js`
   ],
 
@@ -59,6 +58,7 @@ export default {
     locale: {
       language: 'de-DE',
       currency: 'EUR',
+      translations: undefined
     },
     interface: {
       printtypeMode: 'object',
@@ -93,6 +93,12 @@ export default {
     store.dispatch('setUseConstraints', settings.interface.constraints);
     store.dispatch('setAmountMode', settings.interface.amountMode);
     store.dispatch('setShowRealSizes', settings.interface.showRealSizes);
+
+    if(settings.locale.translations) {
+        for(const lang in settings.locale.translations) {
+            store.dispatch('setTranslation', {lang, translation: settings.locale.translations[lang]})
+        }
+    }
 
     for(const key in settings.localVars) {
       store.dispatch('setLocalVar', {localVar: key, value: settings.localVars[key]})
